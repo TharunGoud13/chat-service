@@ -89,7 +89,7 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || "https://chat-service-luje.onrender.com";
+const PORT = process.env.PORT || 3001;
 httpServer.listen(PORT, () => {
   console.log(`Socket.io server is running on port ${PORT}`);
 });

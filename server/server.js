@@ -46,7 +46,8 @@ const httpServer = http.createServer();
 
 const io = new Server(httpServer, {
   cors: {
-    origin: 'https://amogademoapp.vercel.app',
+    // origin: 'https://amogademoapp.vercel.app',
+    origin:"https://amogademoapp.vercel.app/store_chat",
     methods: ['GET', 'POST'],
     allowedHeaders: ['my-custom-header'],
     credentials: true,

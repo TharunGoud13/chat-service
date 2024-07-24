@@ -4,7 +4,7 @@ const cors = require('cors');
 const { Sequelize, DataTypes } = require('sequelize');
 
 // Set up Sequelize with your PostgreSQL connection string
-const sequelize = new Sequelize('postgresql://postgres:Tharun@13@localhost:5432/pgusers', {
+const sequelize = new Sequelize('postgresql://morr:YN59m0Q9QvZvFGGPtKPHGjRV1eQtQpsXy3Rlwx9Wg3jFlVpYaumgXA6ETn4hMXi1@219.93.129.146:5443/tharundb', {
   dialect: 'postgres',
   logging: false,
 });

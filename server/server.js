@@ -4,43 +4,43 @@ const cors = require('cors');
 const { Sequelize, DataTypes } = require('sequelize');
 
 // Set up Sequelize with your PostgreSQL connection string
-const sequelize = new Sequelize('postgresql://morr:YN59m0Q9QvZvFGGPtKPHGjRV1eQtQpsXy3Rlwx9Wg3jFlVpYaumgXA6ETn4hMXi1@219.93.129.146:5443/tharundb', {
-  dialect: 'postgres',
-  logging: false,
-});
+// const sequelize = new Sequelize('postgresql://morr:YN59m0Q9QvZvFGGPtKPHGjRV1eQtQpsXy3Rlwx9Wg3jFlVpYaumgXA6ETn4hMXi1@219.93.129.146:5443/tharundb', {
+//   dialect: 'postgres',
+//   logging: false,
+// });
 
-// Define Message model
-const Message = sequelize.define('Message', {
-  id: {
-    type: DataTypes.UUID,
-    primaryKey: true,
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  avatar: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-  },
-  message: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  room: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-}, {
-  timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: false,
-});
+// // Define Message model
+// const Message = sequelize.define('Message', {
+//   id: {
+//     type: DataTypes.UUID,
+//     primaryKey: true,
+//   },
+//   name: {
+//     type: DataTypes.STRING,
+//     allowNull: false,
+//   },
+//   avatar: {
+//     type: DataTypes.TEXT,
+//     allowNull: true,
+//   },
+//   message: {
+//     type: DataTypes.TEXT,
+//     allowNull: false,
+//   },
+//   room: {
+//     type: DataTypes.STRING,
+//     allowNull: false,
+//   },
+// }, {
+//   timestamps: true,
+//   createdAt: 'created_at',
+//   updatedAt: false,
+// });
 
 // Sync the model with the database
-sequelize.sync()
-  .then(() => console.log('Database synced'))
-  .catch(err => console.error('Error syncing database:', err));
+// sequelize.sync()
+//   .then(() => console.log('Database synced'))
+//   .catch(err => console.error('Error syncing database:', err));
 
 const httpServer = http.createServer();
 
@@ -48,6 +48,7 @@ const io = new Server(httpServer, {
   cors: {
     // origin: 'https://amogademoapp.vercel.app',
     origin:"https://amogademoapp.vercel.app",
+    // origin: "http://localhost:3000",
     methods: ['GET', 'POST'],
     allowedHeaders: ['my-custom-header'],
     credentials: true,

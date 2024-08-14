@@ -9,6 +9,7 @@ const httpServer = http.createServer(app)
 const io = new Server(httpServer, {
   cors: {
     origin: 'https://amogademoapp.vercel.app', // Replace with your frontend URL
+    // origin:'http://localhost:3000', // Replace with your frontend URL
     methods: ['GET', 'POST'],
     allowedHeaders: ['my-custom-header'],
     credentials: true,
@@ -16,6 +17,8 @@ const io = new Server(httpServer, {
 })
 
 app.use(cors())
+
+let onlineUsers = {}
 
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id)
@@ -25,6 +28,12 @@ io.on('connection', (socket) => {
     console.log(`user with id-${socket.id} joined room - ${roomId}`)
   })
 
+  socket.on('user_online', (userId) => {
+    onlineUsers[userId] = socket.id
+    io.emit('user_status_changed', { userId, status: 'online' })
+    console.log(`User ${userId} is now online`)
+  })
+
   socket.on('send_msg', (data) => {
     console.log('---data----',data)
     console.log("id---", data.room)
@@ -32,7 +41,21 @@ io.on('connection', (socket) => {
     io.to(data.room).emit('receive_msg', data)
   })
 
+  socket.on('typing', (data) => {
+    socket.to(data.room).emit('typing', { userId: data.userId, typing: true });
+  });
+
+  socket.on('stop_typing', (data) => {
+    socket.to(data.room).emit('stop_typing', { userId: data.userId, typing: false });
+  });
+
   socket.on('disconnect', () => {
+    const userId = Object.keys(onlineUsers).find(key => onlineUsers[key] === socket.id)
+    if (userId) {
+      delete onlineUsers[userId]
+      io.emit('user_status_changed', { userId, status: 'offline' })
+      console.log(`User ${userId} is now offline`)
+    }
     console.log('A user disconnected:', socket.id)
   })
 })
